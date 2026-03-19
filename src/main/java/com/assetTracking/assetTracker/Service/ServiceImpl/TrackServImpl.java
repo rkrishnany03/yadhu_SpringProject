@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.sound.midi.Track;
 import javax.swing.text.html.Option;
 import java.util.*;
 
@@ -40,18 +41,26 @@ public class TrackServImpl implements TrackServ {
         String owner = body.getAsset_owner();
         try {
             if (id != null) {
-                TrackModel assetmodel = new TrackModel();
-                assetmodel.setAsset_id(id);
-                assetmodel.setAsset_model(model);
-                assetmodel.setAsset_status(status);
-                assetmodel.setAsset_owner(owner);
-                TrackRepo.save(assetmodel);
+                Optional<TrackModel> rid = TrackRepo.findById(id);
+                if(rid.isPresent()) {
+                    return ResponseEntity.ok(Map.of("status", "Failed",
+                            "code", "404",
+                            "msg", "Id Already exist"));
+                }else{
+                    TrackModel assetmodel = new TrackModel();
+                    assetmodel.setAsset_id(id);
+                    assetmodel.setAsset_model(model);
+                    assetmodel.setAsset_status(status);
+                    assetmodel.setAsset_owner(owner);
+                    TrackRepo.save(assetmodel);
 
-                System.out.println("Data added");
-                return ResponseEntity.ok(Map.of("status", "Successful",
-                        "code", "200",
-                        "Data", assetmodel));
-            }
+                    System.out.println("Data added");
+                    return ResponseEntity.ok(Map.of("status", "Successful",
+                            "code", "200",
+                            "Data", assetmodel));
+
+                }
+                   }
         } catch (Exception e) {
             System.out.println(e);
         }

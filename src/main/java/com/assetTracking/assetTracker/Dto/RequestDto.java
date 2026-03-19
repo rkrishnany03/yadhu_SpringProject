@@ -9,6 +9,11 @@ public class RequestDto {
     private String asset_owner;
     private String username;
     private String password;
+    private Long empid;
+
+    public Long getEmpid() {
+        return empid;
+    }
 
     public String getUsername() {
         return username;

@@ -15,6 +15,9 @@ public class TrackModel {
     private String asset_status;
     private String asset_owner;
 
+
+
+
     public String getAsset_owner() {
         return asset_owner;
     }
