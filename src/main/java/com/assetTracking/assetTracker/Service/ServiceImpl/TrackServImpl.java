@@ -26,6 +26,7 @@ public class TrackServImpl implements TrackServ {
            Optional<TrackModel> updated = model.map(TrackModel ->{
            TrackModel.setAsset_model(reqdto.getAsset_model());
            TrackModel.setAsset_status(reqdto.getAsset_status());
+           TrackModel.setAsset_owner(reqdto.getAsset_owner());
            return TrackRepo.save(TrackModel);
        });
 
